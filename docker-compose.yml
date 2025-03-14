@@ -1,0 +1,27 @@
+services:
+  app:
+    build: .
+    command: bundle exec rails server -b 0.0.0.0 -p 3000
+    volumes:
+      - .:/app
+      - bundle_cache:/usr/local/bundle
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+
+  db:
+    image: postgres:15
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+
+volumes:
+  pg_data:
+  bundle_cache:

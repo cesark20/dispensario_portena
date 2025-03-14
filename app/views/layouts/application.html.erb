@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Overroad" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <%= stylesheet_link_tag "application" %>
+  </head>
+
+  <body>
+       <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p>
+
+    <% if user_signed_in? %>
+      <p>Welcome, <%= current_user.name.presence || current_user.email %>!</p>
+      <%= link_to 'Cerrar sesión', destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Iniciar sesión', new_user_session_path %> |
+      <%= link_to 'Registrarse', new_user_registration_path %>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>
