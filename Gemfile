@@ -54,3 +54,4 @@ end
 gem 'devise'
 gem 'devise-i18n'
 gem 'pundit'
+gem "jsbundling-rails", "~> 1.3"

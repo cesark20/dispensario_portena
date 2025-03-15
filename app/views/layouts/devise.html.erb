@@ -19,21 +19,22 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="sb-nav-fixed">
+  <body class="bg-dark">
+       <!-- <p class="notice"><%= notice %></p>
+       <p class="alert"><%= alert %></p> -->
 
-  <%= render "layouts/navbar" %>
-
-  <div id="layoutSidenav">
-    <%= render "layouts/sidebar" %>
-
-    <div id="layoutSidenav_content">
-      <main>
-          <%= yield %>
-      </main>
-
-      <%= render "layouts/footer" %>
-    </div>
-  </div>
-
-</body>
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-5">
+                              <%= yield %>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+  </body>
 </html>
