@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+  <div class="container">
+    <%= link_to root_path, class: "navbar-brand" do %>
+      <%= image_tag "logo.jpg", alt: "Logo", style: "height: 40px;" %>
+    <% end %>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav ms-auto mb-2 mb-md-0 fw-bold text-uppercase">
+        <li class="nav-item">
+          <%= link_to "Inicio", root_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Productos", products_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Servicios", carddetail_path, class: "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Contacto", contact_path, class: "nav-link" %>
+        </li>
+        <li  class="nav-item">
+          <%= link_to '<i class="fas fa-user fa-fw"></i>'.html_safe, dashboard_path, class: "nav-link" %>
+        </li>
+        <!-- <% if user_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Mi Cuenta", edit_profile_path, class: "nav-link" %>
+          </li>
+        <% end %> -->
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -7,9 +7,10 @@ RUN apt-get update -qq && apt-get install -y \
   libpq-dev \
   nodejs \
   npm \
-  curl && \
-  npm install -g yarn && \
-  yarn add jquery
+  curl \
+  libvips \
+  && npm install -g yarn \
+  && yarn add jquery
 
 COPY Gemfile Gemfile.lock ./
 

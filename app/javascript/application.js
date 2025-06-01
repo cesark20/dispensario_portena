@@ -19,4 +19,9 @@ import "datatables.net-bs5/css/dataTables.bootstrap5.min.css";
 
 import "./custom/tables";
 
+import "./custom/budget_search";
+
+import "./custom/dolar";
+import "./custom/vehicles";
+
 import "./stylesheets/styleadmin.css";import "@hotwired/turbo-rails"

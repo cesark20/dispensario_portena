@@ -1,0 +1,36 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Usuarios Internos</h1>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Listado de Usuarios Internos</h6>
+      <%= link_to "Nuevo Usuario Interno", new_internal_user_path, class: 'btn btn-primary btn-icon-split btn-sm' %>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="generalTable" class="table table-striped table-bordered">
+                <thead class="table-dark">
+                <tr>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Roles</th>
+                  <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                  <% @internal_users.each do |internal_user| %>
+                    <tr>
+                      <td><%= internal_user.name %></td>
+                      <td><%= internal_user.email %></td>
+                      <td><%= internal_user.role.capitalize %></td>
+                      <td>
+                        <%= link_to '<i class="fa-solid fa-pen-to-square"></i>'.html_safe, edit_internal_user_path(internal_user), class: "btn btn-warning btn-sm" %>
+                        <%= link_to '<i class="fa-solid fa-trash"></i>'.html_safe, internal_user_path(internal_user), method: :delete, data: { confirm: "¿Estás seguro que querés eliminar este usuario?" }, class: "btn btn-sm btn-danger" %>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+</div>

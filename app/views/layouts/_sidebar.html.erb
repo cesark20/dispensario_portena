@@ -4,9 +4,12 @@
       <div class="sb-sidenav-menu">
         <div class="nav">
           <div class="sb-sidenav-menu-heading">Core</div>
-          <%= link_to "Dashboard", root_path, class: "nav-link" %>
+          <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
           <%= link_to "Expensas", expenses_path, class: "nav-link" %>
-          <div class="sb-sidenav-menu-heading">Interface</div>
+          <%= link_to "Presupuestos", budgets_path, class: "nav-link" %>
+          <%= link_to "Clientes", clients_path, class: "nav-link" %>
+          <%= link_to "Usuarios Internos", internal_users_path, class: "nav-link" %>
+          <!-- <div class="sb-sidenav-menu-heading">Interface</div>
           <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts">
             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
             Layouts
@@ -17,11 +20,11 @@
               <%= link_to "Static Navigation", root_path, class: "nav-link" %>
               <%= link_to "Light Sidenav", root_path, class: "nav-link" %>
             </nav>
-          </div>
+          </div> -->
 
-          <div class="sb-sidenav-menu-heading">Addons</div>
-          <%= link_to "Charts", root_path, class: "nav-link" %>
-          <%= link_to "Tables", root_path, class: "nav-link" %>
+          <div class="sb-sidenav-menu-heading">Cargas</div>
+          <%= link_to "Stock", stocks_path, class: "nav-link" %>
+          <%= link_to "Servicios", services_path, class: "nav-link" %>
         </div>
       </div>
       <div class="sb-sidenav-footer">

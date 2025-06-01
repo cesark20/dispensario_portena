@@ -1,0 +1,20 @@
+<%= form_with(model: @user, url: @user.new_record? ? internal_users_path : internal_user_path(@user), local: true) do |f| %>
+  <div class="mb-3">
+    <%= f.label :name, "Nombre" %>
+    <%= f.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :email, "Email" %>
+    <%= f.email_field :email, class: "form-control", required: true %>
+  </div>
+  
+  <div class="mb-3">
+    <%= f.label :role, "Rol" %>
+    <%= f.select :role, User.roles.except(:client).map { |k, v| [k.humanize, k] }, {}, class: "form-select" %>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= f.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+  <% end %>

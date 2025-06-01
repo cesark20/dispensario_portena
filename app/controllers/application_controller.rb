@@ -28,6 +28,10 @@ class ApplicationController < ActionController::Base
       return "application"
     end
 
+    if controller_path.start_with?("public")
+      return "public"
+    end
+
     "application" # Por defecto, usa el layout general
   end
 end

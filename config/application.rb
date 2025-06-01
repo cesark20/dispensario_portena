@@ -25,6 +25,8 @@ module Overroad
     # config.eager_load_paths << Rails.root.join("extras")
 
     config.i18n.default_locale = :es
+
+    config.autoload_paths << Rails.root.join("app/pdfs")
     
   end
 end

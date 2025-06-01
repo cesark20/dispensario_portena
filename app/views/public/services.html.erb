@@ -1,0 +1,54 @@
+<div class="container py-4">
+  <h1 class="mb-4">Servicios</h1>
+
+    <div class="d-flex justify-content-between mb-3">
+        <%= form_with url: carddetail_path, method: :get, local: true, class: "d-flex w-100" do %>
+            <%= text_field_tag :query, params[:query], placeholder: "Buscar Servicio...", class: "form-control me-2" %>
+            <%= submit_tag "Buscar", class: "btn btn-primary me-2" %>
+            <% if params[:query].present? %>
+            <%= link_to "Limpiar", carddetail_path, class: "btn btn-secondary" %>
+            <% end %>
+        <% end %>
+    </div>
+
+  <div class="row">
+    <div class="row">
+          <div class="col-md-12">
+            <div class="service-grid row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">              
+              <% @paginated_services.each do |service| %>
+                <div class="col d-flex">
+                  <div class="card shadow-sm h-100 w-100 d-flex flex-column">
+                    <%= image_tag "default_img.jpg", class: "card-img-top", style: "object-fit: contain; height: 200px;" %>
+                    
+
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <div>
+                        <p class="text-uppercase text-muted mb-1 fw-semibold">OVER ROAD</p>
+                        <h5 class="fw-bold mb-1"><%= service.name %></h5>
+                        <p class="text-muted small mb-2"><%= truncate(service.description, length: 60) %></p>
+
+                        <span class="badge bg-warning text-dark mb-2">20% OFF TRANSFERENCIA</span>
+
+                        <h5 class="fw-bold">$<%= number_with_precision(service.price, precision: 2) %></h5>
+                        <p class="text-muted small">
+                          en 6 cuotas SIN INTERÉS de $<%= number_with_precision(service.price / 6.0, precision: 0) %>
+                        </p>
+                      </div>
+
+                      <div class="mt-auto pt-2">
+                        <%= link_to "VER SERVICIO", services_path(service), class: "btn btn-dark w-100" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <%= paginate @paginated_services %>
+  </div>
+</div>

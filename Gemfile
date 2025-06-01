@@ -42,6 +42,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'byebug'
 end
 
 group :test do
@@ -57,3 +58,13 @@ gem 'pundit'
 gem "jsbundling-rails", "~> 1.3"
 
 gem 'turbo-rails'
+
+gem 'prawn'
+gem 'prawn-table'
+
+gem 'humanize', '~> 3.1.0'
+
+gem "image_processing", "~> 1.2"
+gem "aws-sdk-s3", require: false
+gem 'dotenv-rails'
+gem 'kaminari'

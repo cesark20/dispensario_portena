@@ -21,4 +21,11 @@ class User < ApplicationRecord
   def set_default_role
     self.role ||= :client
   end
+
+  has_one :client_info, dependent: :destroy
+  accepts_nested_attributes_for :client_info
+
+  has_many :vehicles, dependent: :destroy
+  accepts_nested_attributes_for :vehicles, allow_destroy: true
+
 end

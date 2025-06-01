@@ -1,0 +1,61 @@
+<%= form_with(model: @budget, local: true, class: "needs-validation") do |f| %>
+    <div class="mb-3">
+      <%= f.label :user_id, "Cliente" %>
+      <%= f.collection_select :user_id, User.where(role: :client), :id, :name, { prompt: "Seleccionar Cliente" }, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :license_plate, "Patente del Vehículo" %>
+      <%= f.text_field :license_plate, class: "form-control", placeholder: "Ej: AB-123-CD" %>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :date, "Fecha" %>
+      <%= f.date_field :date, class: "form-control" %>
+    </div>
+
+    <div class="mb-3 position-relative">
+      <label for="search-input">Buscar Producto o Servicio</label>
+      <input type="text" id="search-input" class="form-control" placeholder="Tipo de busqueda...">
+      <ul id="search-results" class="list-group position-absolute w-100" style="z-index: 1000; display: none;"></ul>
+    </div>
+
+<table class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Tipo</th>
+      <th>Precio</th>
+      <th>Cantidad</th>
+      <th>Acción</th>
+    </tr>
+  </thead>
+  <tbody id="selected-items">
+    <% @budget.budget_items.each_with_index do |item, index| %>
+      <tr data-item-id="<%= item.id %>">
+        <td>
+          <%= item.item.name %>
+          <input type="hidden" name="budget[items][<%= index %>][id]" value="<%= item.item.id %>">
+          <input type="hidden" name="budget[items][<%= index %>][name]" value="<%= item.item.name %>">
+          <input type="hidden" name="budget[items][<%= index %>][category]" value="<%= item.item_type %>">
+          <input type="hidden" name="budget[items][<%= index %>][price]" value="<%= item.unit_price %>">
+        </td>
+        <td><%= item.item_type %></td>
+        <td>$<%= item.unit_price %></td>
+        <td><input type="number" name="budget[items][<%= index %>][quantity]" min="1" value="<%= item.quantity %>" class="form-control"></td>
+        <td style="text-align: center">
+          <button type="button" class="btn btn-danger btn-sm remove-item" data-item-id="<%= item.id %>">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<!-- Campo oculto para enviar los IDs de los items eliminados -->
+<input type="hidden" name="budget[removed_items]" id="removed-items">
+
+    <div class="d-flex justify-content-end">
+      <%= f.submit "Generar", class: "btn btn-primary" %>
+    </div>
+  <% end %>
