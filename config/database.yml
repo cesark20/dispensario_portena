@@ -36,6 +36,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
   database: overroad_production
   username: overroad
   password: <%= ENV["OVERROAD_DATABASE_PASSWORD"] %>
