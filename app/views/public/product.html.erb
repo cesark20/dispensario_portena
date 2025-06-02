@@ -46,11 +46,11 @@
       <p class="text-muted">Código: <%= @product.code %></p>
 
       <h3 class="fw-bold text-danger">$ <%= number_with_precision(@product.price, precision: 2, delimiter: '.') %></h3>
-      <p class="text-muted small">Precio sin impuestos nacionales: $ <%= number_with_precision(@product.price * 0.82, precision: 2) %></p>
+      <!-- <p class="text-muted small">Precio sin impuestos nacionales: $ <%= number_with_precision(@product.price * 0.82, precision: 2) %></p> -->
 
-      <span class="badge bg-warning text-dark mb-3">20% OFF TRANSFERENCIA BANCARIA</span>
+      <span class="badge bg-warning text-dark mb-3">10.5% OFF EN EFECTIVO</span>
 
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <p>3 cuotas sin interés de $ <%= number_with_precision(@product.price / 3, precision: 2) %></p>
         <p>6 cuotas sin interés de $ <%= number_with_precision(@product.price / 6, precision: 2) %></p>
         <div class="d-flex gap-2">
@@ -58,7 +58,7 @@
           <%= image_tag "logo-mastercard.png", width: 40 %>
           <%= image_tag "logo-american-express.png", width: 40 %>
         </div>
-      </div>
+      </div> -->
 
       <div class="input-group mb-3" style="max-width: 150px;">
         <span class="input-group-text">Cantidad</span>
@@ -66,7 +66,7 @@
       </div>
 
       <div class="d-grid gap-2">
-        <%= link_to "CONSULTAR POR ESTE PRODUCTO", 
+        <%= link_to "CONSULTAR FINANCIACION Y DISPONIBILIDAD", 
   "https://wa.me/5493517615994?text=#{ERB::Util.url_encode("Hola! Quisiera consultar el precio del producto: #{@product.code} - #{@product.name}")}", 
   class: "btn btn-danger btn-lg", target: "_blank", rel: "noopener" %>
       </div>

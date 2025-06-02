@@ -30,12 +30,12 @@
                         <h5 class="fw-bold mb-1"><%= product.name %></h5>
                         <p class="text-muted small mb-2"><%= truncate(product.description, length: 60) %></p>
 
-                        <span class="badge bg-warning text-dark mb-2">20% OFF TRANSFERENCIA</span>
+                        <span class="badge bg-warning text-dark mb-2">10.5% OFF EFECTIVO</span>
 
                         <h5 class="fw-bold">$<%= number_with_precision(product.price, precision: 2) %></h5>
-                        <p class="text-muted small">
+                        <!-- <p class="text-muted small">
                           en 6 cuotas SIN INTERÉS de $<%= number_with_precision(product.price / 6.0, precision: 0) %>
-                        </p>
+                        </p> -->
                       </div>
 
                       <div class="mt-auto pt-2">
