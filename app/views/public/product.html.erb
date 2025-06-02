@@ -1,22 +1,43 @@
 <div class="container my-5">
   <div class="row">
     <!-- Miniaturas -->
-    <div class="col-md-2 d-none d-md-block">
-      <% @product.images.each do |image| %>
-        <div class="mb-2">
-          <%= image_tag image.variant(resize_to_limit: [100, 100]), class: "img-thumbnail" %>
-        </div>
-      <% end %>
-    </div>
+    <div class="col-md-7">
+    <div class="row">
+      <div class="col-md-3 d-none d-md-block">
+        <% if @product.images.attached? %>
+          <% @product.images.each do |image| %>
+            <div class="mb-2">  
+              <a href="<%= url_for(image) %>" class="glightbox">
+                <%= image_tag image.variant(resize_to_limit: [100, 100]), class: "img-thumbnail" %>
+              </a>
+            </div>
+          <% end %>
+        <% else %>
+            <%= image_tag "default_img.jpg", class: "img-thumbnail" %>
+          <% end %>
+      </div>
 
-    <!-- Imagen principal -->
-    <div class="col-md-5">
-      <% if @product.images.attached? %>
-        <%= image_tag @product.images.first.variant(resize_to_limit: [600, 600]), class: "img-fluid" %>
-      <% else %>
-        <%= image_tag "default_img.jpg", class: "img-fluid" %>
-      <% end %>
+      <!-- Imagen principal -->
+        <div class="col-md-9">
+          <% if @product.images.attached? %>
+            <%= image_tag @product.images.first.variant(resize_to_limit: [600, 600]), class: "img-fluid" %>
+          <% else %>
+            <%= image_tag "default_img.jpg", class: "img-fluid" %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-md-12">
+          <% if @product.description.present? %>
+          
+                <h4 class="mb-3">Descripción del producto</h4>
+                <p><%= simple_format(@product.description) %></p>
+             
+          <% end %>
+        </div>
+      </div>
     </div>
+    
 
     <!-- Información del producto -->
     <div class="col-md-5">
@@ -41,26 +62,32 @@
 
       <div class="input-group mb-3" style="max-width: 150px;">
         <span class="input-group-text">Cantidad</span>
-        <input type="number" value="1" class="form-control" DISABLED>
+        <input type="number" value="1" class="form-control" disabled>
       </div>
 
       <div class="d-grid gap-2">
-        <a href="#" class="btn btn-danger btn-lg">CONSULTAR POR ESTE PRODUCTO </a>
-        <%# <a href="#" class="btn btn-outline-dark btn-lg">COMPRAR AHORA</a> %>
+        <%= link_to "CONSULTAR POR ESTE PRODUCTO", 
+  "https://wa.me/5493517615994?text=#{ERB::Util.url_encode("Hola! Quisiera consultar el precio del producto: #{@product.code} - #{@product.name}")}", 
+  class: "btn btn-danger btn-lg", target: "_blank", rel: "noopener" %>
       </div>
 
       <div class="mt-4 d-flex gap-3">
         <div>
           <i class="fa fa-store"></i><br>
           <strong>Retiro en sucursal</strong><br>
-          <a href="#">Ver sucursales</a>
+          <a href="/contact">Ver sucursales</a>
         </div>
-        <div>
+        <!-- <div>
           <i class="fa fa-truck"></i><br>
           <strong>Envíos a todo el país</strong><br>
-          <a href="#">Calculá tu envío</a>
-        </div>
+          <%= link_to "Calculá tu envío", 
+            "https://wa.me/5493517615994?text=#{ERB::Util.url_encode("Hola! Quisiera saber el costo del envío del producto: #{@product.code} - #{@product.name}. A la ciudad:")}", 
+            class: "", target: "_blank", rel: "noopener" %>
+        </div> -->
       </div>
     </div>
   </div>
+
+  <!-- Descripción del producto -->
+  
 </div>

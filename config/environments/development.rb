@@ -81,8 +81,9 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
-  config.hosts << "772b-152-169-5-134.ngrok-free.app"
-
+  # config.hosts << "https://5483-152-169-5-134.ngrok-free.app"
+  config.hosts << /[a-z0-9\-]+\.ngrok-free\.app/
+  
   config.action_mailer.delivery_method = :smtp
 
 config.action_mailer.smtp_settings = {

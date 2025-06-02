@@ -23,7 +23,7 @@
                     <tr>
                       <td><%= budget.id %></td>
                       <td><%= budget.user.name %></td>
-                      <td><%= budget.date.strftime("%d/%m/%Y") %></td>
+                      <td><%= budget.date&.strftime("%d/%m/%Y") || "Sin fecha" %></td>
                       <td><%= budget.budget_items.count %></td>
                       <td>$<%= number_to_currency(budget.total || 0, unit: "", separator: ",", delimiter: ".") %></td>
                       <td>

@@ -33,7 +33,7 @@
     <% @budget.budget_items.each_with_index do |item, index| %>
       <tr data-item-id="<%= item.id %>">
         <td>
-          <%= item.item.name %>
+          <a href="/products/<%= item.item.id %>" target="_blank" rel="noopener"><%= item.item.name %></a>
           <input type="hidden" name="budget[items][<%= index %>][id]" value="<%= item.item.id %>">
           <input type="hidden" name="budget[items][<%= index %>][name]" value="<%= item.item.name %>">
           <input type="hidden" name="budget[items][<%= index %>][category]" value="<%= item.item_type %>">

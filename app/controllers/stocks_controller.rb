@@ -61,10 +61,10 @@ class StocksController < ApplicationController
   end
 
   def stock_params_with_images
-    params.require(:stock).permit(:name, :description, :provider, :price, :cost, :featured, :available_quantity, :code, images: [])
+    params.require(:stock).permit(:name, :code, :description, :provider, :price, :cost, :featured, :available_quantity, :code, images: [])
   end
 
   def stock_params
-    params.require(:stock).permit(:name, :description, :provider, :price, :cost, :featured, :available_quantity, :code)
+    params.require(:stock).permit(:name, :code, :description, :provider, :price, :cost, :featured, :available_quantity, :code)
   end
 end

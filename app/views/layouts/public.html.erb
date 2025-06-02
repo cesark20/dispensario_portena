@@ -16,11 +16,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+
+    <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js" %>
     
     
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" %>
+
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&amp;family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet">
   </head>
 
@@ -33,5 +37,7 @@
 
     
     <%= render "layouts/public/footer" %>
+    
+  
   </body>
 </html>

@@ -64,7 +64,7 @@ document.addEventListener("turbo:load", () => {
 
     row.innerHTML = `
       <td>
-          ${item.name}
+          <a href="/products/${item.id}" target="_blank" rel="noopener">${item.name}</a>
           <input type="hidden" name="budget[items][${rowIndex}][id]" value="${item.id}">
           <input type="hidden" name="budget[items][${rowIndex}][name]" value="${item.name}">
           <input type="hidden" name="budget[items][${rowIndex}][category]" value="${item.category}">

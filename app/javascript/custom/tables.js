@@ -10,6 +10,7 @@ document.addEventListener("turbo:load", () => {
 
   if (!$.fn.DataTable.isDataTable("#generalTable")) {
     $("#generalTable").DataTable({
+      order: [[0, 'desc']],
       responsive: true,
       language: {
         url: "/locales/es-ES.json"
