@@ -7,8 +7,8 @@ namespace :import do
 
     CSV.foreach(file_path, headers: true, col_sep: ",", encoding: "ISO-8859-1:UTF-8") do |row|
       # Limpiar y convertir datos
-      name = row["name"]
-      description = row["Descripcion"]
+      name = row["name"].to_s.force_encoding("ISO-8859-1").encode("UTF-8")
+      description = row["Descripcion"].to_s.force_encoding("ISO-8859-1").encode("UTF-8")
       provider = row["Provider"]
       price = row["Price"].gsub(/[^\d.]/, '').to_f # Eliminar "$" y "," del precio
       cost = row["cost"].to_f
