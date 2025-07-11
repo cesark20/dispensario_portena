@@ -8,6 +8,7 @@ class ClientsController < ApplicationController
   def new
     @client = User.new(role: "client")
     @client.build_client_info # Para que el formulario incluya los campos de ClientInfo
+    @client.vehicles.build # Para que el formulario incluya los campos de Vehicle
   end
 
   def create

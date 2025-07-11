@@ -46,7 +46,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= f.fields_for :vehicles, @client.vehicles.build do |v| %>
+      <%= f.fields_for :vehicles do |v| %>
         <tr>
           <td><%= v.text_field :license_plate, class: "form-control" %></td>
           <td><%= v.text_field :brand, class: "form-control" %></td>
