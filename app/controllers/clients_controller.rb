@@ -45,8 +45,6 @@ class ClientsController < ApplicationController
       :email, 
       client_info_attributes: [:id, :phone, :address, :tax_id, :business_name], 
       vehicles_attributes: [:id, :license_plate, :brand, :model, :year, :_destroy]
-    ).tap do |whitelisted|
-      whitelisted[:vehicles_attributes] = params[:user][:vehicles_attributes] if params[:user][:vehicles_attributes]
-    end
+    )
   end
 end
