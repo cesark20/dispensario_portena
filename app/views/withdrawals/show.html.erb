@@ -1,0 +1,50 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Egreso #<%= @withdrawal&.id || "-" %></h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <p><strong>Tipo:</strong> <%= @withdrawal.kind == "patient" ? "Paciente" : "Enfermería" %></p>
+      <p><strong>Reintegro:</strong> <%= @withdrawal.reimbursement %></p>
+      <p><strong>Paciente:</strong> <%= @withdrawal.patient&.full_name || "-" %></p>
+      <p><strong>Enfermería:</strong> <%= @withdrawal.internal_user&.full_name || "-" %></p>
+      <p><strong>Fecha:</strong> <%= l(@withdrawal.occurred_at, format: :short) %></p>
+      <p><strong>Total a cobrar:</strong> <%= number_to_currency(@withdrawal.total_amount) %></p>
+
+      <hr>
+      <h6>Detalle</h6>
+      <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+          <tr><th>Insumo</th><th>Cant.</th><th>Precio venta</th><th>Subtotal</th></tr>
+        </thead>
+        <tbody>
+          <% @withdrawal.withdrawal_lines.each do |l| %>
+            <tr>
+              <td><%= l.item.name %></td>
+              <td><%= l.quantity %></td>
+              <td><%= number_to_currency(l.sale_unit_price) %></td>
+              <td><%= number_to_currency(l.sale_unit_price*l.quantity) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <h6>Lotes consumidos (FIFO)</h6>
+      <table class="table table-sm">
+        <thead><tr><th>Insumo</th><th>Lote</th><th>Vence</th><th>Cant.</th><th>Costo unit.</th></tr></thead>
+        <tbody>
+          <% @withdrawal.withdrawal_lines.each do |l| %>
+            <% l.stock_movements.includes(:item_batch).each do |m| %>
+              <tr>
+                <td><%= l.item.name %></td>
+                <td><%= m.item_batch.lot_code %></td>
+                <td><%= m.item_batch.expires_on %></td>
+                <td><%= m.quantity %></td>
+                <td><%= number_to_currency(m.unit_value) %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

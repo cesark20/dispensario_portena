@@ -2,38 +2,38 @@
   <h1 class="mt-4">Dashboard</h1>
 
   <div class="row">
-      <div class="col-xl-3 col-md-6">
+      <!-- <div class="col-xl-3 col-md-6">
           <div class="card bg-primary text-white mb-4">
               <div class="card-body">$<%= number_to_currency(@total_expenses, unit: "", separator: ",", delimiter: ".") %></div>
               <div class="card-footer d-flex align-items-center justify-content-between">
-                  <%= link_to "Gastos", expenses_path, class: "small text-white stretched-link" %>
+                  <%= link_to "Gastos", dashboard_path, class: "small text-white stretched-link" %>
                   <div class="small text-white"><i class="fas fa-angle-right"></i></div>
               </div>
           </div>
-      </div>
+      </div> -->
       <div class="col-xl-3 col-md-6">
           <div class="card bg-warning text-white mb-4">
-              <div class="card-body"><%= @total_stock_items %> Productos</div>
+              <div class="card-body"><%= @items_to_reorder_count %> Items en falta o bajo stock</div>
               <div class="card-footer d-flex align-items-center justify-content-between">
-                  <%= link_to "Stock", stocks_path, class: "small text-white stretched-link" %>
+                  <%= link_to "Stock", reorder_items_path, class: "small text-white stretched-link" %>
                   <div class="small text-white"><i class="fas fa-angle-right"></i></div>
               </div>
           </div>
       </div>
       <div class="col-xl-3 col-md-6">
           <div class="card bg-success text-white mb-4">
-              <div class="card-body"><%= @total_budgets%></div>
+              <div class="card-body">Medicamentos por Pacientes</div>
               <div class="card-footer d-flex align-items-center justify-content-between">
-                  <%= link_to "Presupuestos Realizados", budgets_path, class: "small text-white stretched-link" %>
+                  <%= link_to "Ver", deliveries_path, class: "small text-white stretched-link" %>
                   <div class="small text-white"><i class="fas fa-angle-right"></i></div>
               </div>
           </div>
       </div>
       <div class="col-xl-3 col-md-6">
           <div class="card bg-danger text-white mb-4">
-              <div class="card-body"><%= @total_clients %></div>
+              <div class="card-body"><%= @patients_count %> Pacientes</div>
               <div class="card-footer d-flex align-items-center justify-content-between">
-                  <%= link_to "Cantidad de Clientes", clients_path, class: "small text-white stretched-link" %>
+                  <%= link_to "Pacientes", patients_path, class: "small text-white stretched-link" %>
                   <div class="small text-white"><i class="fas fa-angle-right"></i></div>
               </div>
           </div>

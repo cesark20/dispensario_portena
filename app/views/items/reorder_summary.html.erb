@@ -1,0 +1,36 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Pedido de insumos</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Indicar cantidades a pedir</h6>
+    </div>
+
+    <div class="card-body">
+      <%= form_with url: reorder_pdf_items_path(format: :pdf),
+                    method: :post,
+                    data: { turbo: false },
+                    local: true do %>
+
+        <% @items.each do |item| %>
+          <div class="mb-3">
+            <strong><%= item.name %></strong>
+            <small class="text-muted">
+              (Proveedor: <%= item.provider&.name || "Sin proveedor" %>)
+            </small><br>
+
+            <%= number_field_tag "quantities[#{item.id}]",
+                                 1,
+                                 min: 1,
+                                 class: "form-control w-25 d-inline-block mt-1" %>
+          </div>
+        <% end %>
+
+        <div class="mt-4 d-flex gap-3">
+          <%= submit_tag "Generar PDF", class: "btn btn-success" %>
+          <%= link_to "Volver", reorder_items_path, class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

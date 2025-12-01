@@ -10,112 +10,70 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_01_154654) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_11_185356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "active_storage_attachments", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
-    t.datetime "created_at", null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
-  end
-
-  create_table "active_storage_blobs", force: :cascade do |t|
-    t.string "key", null: false
-    t.string "filename", null: false
-    t.string "content_type"
-    t.text "metadata"
-    t.string "service_name", null: false
-    t.bigint "byte_size", null: false
-    t.string "checksum"
-    t.datetime "created_at", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
-  end
-
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
-
-  create_table "budget_items", force: :cascade do |t|
-    t.bigint "budget_id", null: false
-    t.string "item_type", null: false
+  create_table "item_batches", force: :cascade do |t|
     t.bigint "item_id", null: false
-    t.integer "quantity", default: 1
-    t.decimal "unit_price", precision: 10, scale: 2
-    t.decimal "discount", precision: 5, scale: 2, default: "0.0"
+    t.string "lot_code"
+    t.date "expires_on"
+    t.decimal "unit_cost", precision: 10, scale: 2
+    t.integer "quantity_on_hand"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["budget_id"], name: "index_budget_items_on_budget_id"
-    t.index ["item_type", "item_id"], name: "index_budget_items_on_item"
+    t.index ["item_id"], name: "index_item_batches_on_item_id"
   end
 
-  create_table "budgets", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.date "date"
-    t.decimal "total"
-    t.decimal "global_discount"
-    t.string "status"
+  create_table "items", force: :cascade do |t|
+    t.string "name"
+    t.string "sku"
+    t.string "unit"
+    t.integer "min_stock"
+    t.decimal "sale_price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "license_plate"
-    t.index ["user_id"], name: "index_budgets_on_user_id"
+    t.bigint "provider_id", null: false
+    t.index ["provider_id"], name: "index_items_on_provider_id"
   end
 
-  create_table "client_infos", force: :cascade do |t|
+  create_table "patient_infos", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "address"
+    t.string "health_insurance"
+    t.string "policy_number"
+    t.date "birthdate"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_patient_infos_on_user_id"
+  end
+
+  create_table "providers", force: :cascade do |t|
+    t.string "name"
+    t.string "contact_name"
     t.string "phone"
-    t.string "tax_id"
-    t.string "business_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_client_infos_on_user_id"
-  end
-
-  create_table "expenses", force: :cascade do |t|
-    t.string "description"
-    t.string "company"
-    t.date "date"
-    t.string "responsible"
-    t.string "category"
-    t.decimal "amount_peso"
-    t.decimal "dollar_rate"
-    t.decimal "equivalent_usd"
-    t.decimal "amount_usd"
-    t.boolean "has_invoice"
+    t.string "email"
+    t.string "address"
+    t.string "cuit"
+    t.boolean "status"
     t.text "comments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "created_by_id"
+    t.bigint "updated_by_id"
+    t.index ["created_by_id"], name: "index_providers_on_created_by_id"
+    t.index ["updated_by_id"], name: "index_providers_on_updated_by_id"
   end
 
-  create_table "services", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.decimal "price"
-    t.decimal "cost"
-    t.integer "duration_minutes"
-    t.string "code"
+  create_table "stock_movements", force: :cascade do |t|
+    t.bigint "withdrawal_line_id", null: false
+    t.bigint "item_batch_id", null: false
+    t.integer "quantity"
+    t.decimal "unit_value", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "stocks", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.decimal "price"
-    t.decimal "cost"
-    t.integer "available_quantity"
-    t.string "code"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "provider"
-    t.boolean "featured"
+    t.index ["item_batch_id"], name: "index_stock_movements_on_item_batch_id"
+    t.index ["withdrawal_line_id"], name: "index_stock_movements_on_withdrawal_line_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -126,27 +84,53 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_01_154654) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role", default: 0
-    t.string "name"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone"
+    t.string "address"
+    t.string "document_id"
+    t.boolean "status"
+    t.integer "role"
+    t.boolean "login_enabled", default: true, null: false
+    t.string "reimbursement"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "vehicles", force: :cascade do |t|
-    t.string "license_plate"
-    t.string "brand"
-    t.string "model"
-    t.integer "year"
-    t.bigint "user_id", null: false
+  create_table "withdrawal_lines", force: :cascade do |t|
+    t.bigint "withdrawal_id", null: false
+    t.bigint "item_id", null: false
+    t.integer "quantity"
+    t.decimal "sale_unit_price", precision: 10, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_vehicles_on_user_id"
+    t.index ["item_id"], name: "index_withdrawal_lines_on_item_id"
+    t.index ["withdrawal_id"], name: "index_withdrawal_lines_on_withdrawal_id"
   end
 
-  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "budget_items", "budgets"
-  add_foreign_key "budgets", "users"
-  add_foreign_key "client_infos", "users"
-  add_foreign_key "vehicles", "users"
+  create_table "withdrawals", force: :cascade do |t|
+    t.string "kind", null: false
+    t.string "reimbursement", null: false
+    t.bigint "patient_id"
+    t.bigint "internal_user_id"
+    t.decimal "total_amount", precision: 10, scale: 2, default: "0.0"
+    t.datetime "occurred_at", null: false
+    t.text "note"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["internal_user_id"], name: "index_withdrawals_on_internal_user_id"
+    t.index ["patient_id"], name: "index_withdrawals_on_patient_id"
+  end
+
+  add_foreign_key "item_batches", "items"
+  add_foreign_key "items", "providers"
+  add_foreign_key "patient_infos", "users"
+  add_foreign_key "providers", "users", column: "created_by_id"
+  add_foreign_key "providers", "users", column: "updated_by_id"
+  add_foreign_key "stock_movements", "item_batches"
+  add_foreign_key "stock_movements", "withdrawal_lines"
+  add_foreign_key "withdrawal_lines", "items"
+  add_foreign_key "withdrawal_lines", "withdrawals"
+  add_foreign_key "withdrawals", "users", column: "internal_user_id"
+  add_foreign_key "withdrawals", "users", column: "patient_id"
 end

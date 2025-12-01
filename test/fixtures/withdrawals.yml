@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  kind: MyString
+  reimbursement: MyString
+  patient: one
+  internal_user: one
+  total_amount: 9.99
+  occurred_at: 2025-11-11 14:03:10
+  note: MyText
+
+two:
+  kind: MyString
+  reimbursement: MyString
+  patient: two
+  internal_user: two
+  total_amount: 9.99
+  occurred_at: 2025-11-11 14:03:10
+  note: MyText

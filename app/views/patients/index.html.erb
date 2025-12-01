@@ -1,0 +1,41 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Pacientes</h1>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Listado de Pacientes</h6>
+      <%= link_to "Nuevo Paciente", new_patient_path, class: 'btn btn-primary btn-icon-split btn-sm' %>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table id="generalTable" class="table table-striped table-bordered">
+                <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>DNI</th>
+                    <th>Email</th>
+                    <th>Obra social</th>
+                    <th>Afiliado</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <% @patients.each do |p| %>
+                    <tr>
+                      <td><%= [p.first_name, p.last_name].compact.join(" ") %></td>
+                      <td><%= p.document_id %></td>
+                      <td><%= p.email %></td>
+                      <td><%= p.patient_info&.health_insurance %></td>
+                      <td><%= p.patient_info&.policy_number %></td>
+                    <td>
+                        <%= link_to '<i class="fa-solid fa-pen-to-square"></i>'.html_safe, edit_patient_path(p), class: "btn btn-warning btn-sm" %>
+                        <%= link_to '<i class="fa-solid fa-trash"></i>'.html_safe, patient_path(p), method: :delete, data: { confirm: "¿Seguro que quieres eliminar este registro?" }, class: "btn btn-danger btn-sm", "data-turbo" => false %>
+                        <%= link_to '<i class="fa-solid fa-eye"></i>'.html_safe, patient_delivery_path(p), class: "btn btn-sm btn-info" %>
+                    </td>
+                    </tr>
+                <% end %>
+                </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+</div>

@@ -1,31 +1,50 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # Definir roles con enum
-  enum role: {
-    client: 0,
-    employee: 1,
-    seller: 2,
-    admin: 3,
-    superadmin: 4
-  }
+  enum role: { admin: 0, pharmacy: 1, healthcare_staff: 2, patient: 3, superadmin: 4 }
 
-  # Establecer el rol predeterminado al crear un usuario
-  after_initialize :set_default_role, if: :new_record?
+  ROLE_LABELS = {
+    "admin"           => "Administrador",
+    "pharmacy"        => "Farmacia",
+    "healthcare_staff"=> "Personal de salud",
+    "patient"         => "Paciente",
+    "superadmin"      => "Superadministrador"
+  }.freeze
+  
+  def role_label
+    ROLE_LABELS[role] || role.to_s
+  end
+
+  validates :first_name, :last_name, :phone, :address, :document_id, presence: true
+  validates :email, presence: true, uniqueness: true
+  validates :status, inclusion: { in: [true, false] }
+
+  has_one :patient_info, dependent: :destroy
+  accepts_nested_attributes_for :patient_info, update_only: true
+
+  def active_for_authentication?
+    super && login_enabled
+  end
+
+  # ==== REINTEGRO ====
+  VALID_REIMBURSEMENTS = %w[full half none].freeze
+
+  # validación SUAVE: solo cuando viene algo, y se permite nil
+  validates :reimbursement, inclusion: { in: VALID_REIMBURSEMENTS }, allow_nil: true
+
+  before_validation :default_reimbursement_for_non_patients
+
+  def full_name
+    [last_name, first_name].compact.join(", ").presence || email
+  end
 
   private
 
-  def set_default_role
-    self.role ||= :client
+  def default_reimbursement_for_non_patients
+    # si no trae nada, seteamos por defecto:
+    # pacientes => "none" (paga todo)
+    # resto     => "full" (no paga)
+    self.reimbursement ||= (role == "patient" ? "none" : "full")
   end
-
-  has_one :client_info, dependent: :destroy
-  accepts_nested_attributes_for :client_info
-
-  has_many :vehicles, dependent: :destroy
-  accepts_nested_attributes_for :vehicles, allow_destroy: true
-
 end

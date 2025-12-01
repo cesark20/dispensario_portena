@@ -1,0 +1,48 @@
+<%= form_with model: @item,
+              url: (@item.new_record? ? items_path : item_path(@item)),
+              local: true do |f| %>
+
+  <% if @item.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @item.errors.full_messages.each { |m| %><li><%= m %></li><% } %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :name, "Nombre" %>
+    <%= f.text_field :name, class: "form-control", required: true %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <%= f.label :sku, "SKU" %>
+      <%= f.text_field :sku, class: "form-control", placeholder: "Ejemplo: 1234567890 (codigo interno)" %>
+    </div>
+    <div class="col-md-4 mb-3">
+      <%= f.label :unit, "Unidad" %>
+      <%= f.text_field :unit, class: "form-control", placeholder: "unidad / caja / ml" %>
+    </div>
+    <div class="col-md-4 mb-3">
+      <%= f.label :min_stock, "Stock Minimo" %>
+      <%= f.number_field :min_stock, class: "form-control", min: 0 %>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :sale_price, "Precio de venta" %>
+    <%= f.number_field :sale_price, step: "0.01", class: "form-control", min: 0 %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :provider_id, "Proveedor" %>
+    <%= f.collection_select :provider_id,
+      Provider.where(status: true).order(:name), :id, :name,
+      { include_blank: "Seleccione proveedor" }, { class: "form-control" } %>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= f.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

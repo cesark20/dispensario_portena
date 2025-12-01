@@ -1,8 +1,8 @@
 class DashboardController < ApplicationController
   def index
-    @total_stock_items = Stock.sum(:available_quantity) 
-    @total_expenses = Expense.sum(:amount_peso) 
-    @total_budgets =  Budget.count()
-    @total_clients =  User.where(role: "client").count()
+    @items_to_reorder_count = Item.includes(:item_batches).select(&:low_stock?).count
+    @total_expenses = 2 
+    @total_budgets =  3
+    @patients_count =  User.where(role: :patient).count
   end
 end

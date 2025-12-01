@@ -1,0 +1,74 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4"><%= @item.name %></h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Detalle del Insumo</h6>
+      <div>
+        <%= link_to "Egresar este insumo", new_withdrawal_path(withdrawal: { withdrawal_lines_attributes: [ { item_id: @item.id, sale_unit_price: @item.sale_price, quantity: 1 } ] }),
+    class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to '<i class="fa-solid fa-pen-to-square"></i>'.html_safe, edit_item_path(@item), class: "btn btn-warning btn-sm" %>
+        <%= link_to "Volver", items_path, class: "btn btn-secondary btn-sm ms-1" %>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row mb-3">
+        <div class="col-md-3"><strong>SKU:</strong> <%= @item.sku %></div>
+        <div class="col-md-3"><strong>Unidad:</strong> <%= @item.unit %></div>
+        <div class="col-md-3"><strong>Stock total:</strong> <%= @item.total_on_hand %> <%= @item.low_stock? ? "(Bajo)" : "" %></div>
+        <div class="col-md-3"><strong>Precio venta:</strong> <%= number_to_currency(@item.sale_price) if @item.sale_price %></div>
+        <div class="col-md-3"><strong>Proveedor:</strong><%= @item.provider&.name || "-" %></div>
+      </div>
+
+      <hr>
+
+      <h6 class="mb-3">Lotes</h6>
+      <div class="table-responsive">
+        <table id="generalTable" class="table table-striped table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th>Lote</th>
+              <th>Vence</th>
+              <th>Costo unit.</th>
+              <th>Cantidad</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @item.item_batches.order(:expires_on, :created_at).each do |b| %>
+              <tr class="<%= 'table-danger' if b.expires_on.present? && b.expires_on < Date.current %>">
+                <td><%= b.lot_code %></td>
+                <td><%= b.expires_on %></td>
+                <td><%= number_to_currency(b.unit_cost) if b.unit_cost %></td>
+                <td><%= b.quantity_on_hand %></td>
+                <td>
+                  <%= button_to '<i class="fa-solid fa-trash"></i>'.html_safe,
+                                item_item_batch_path(@item, b),
+                                method: :delete,
+                                data: { turbo: false, confirm: "¿Eliminar lote?" },
+                                class: "btn btn-danger btn-sm" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <hr>
+
+      <h6 class="mb-3">Agregar Lote</h6>
+
+      <%= form_with model: ItemBatch.new,
+              url: item_item_batches_path(@item),
+              local: true do |f| %>
+        <div class="row g-2"><!-- campos -->
+          <div class="col-md-3 mb-2"><%= f.text_field  :lot_code, class: "form-control", placeholder: "Codigo de lote" %></div>
+          <div class="col-md-3 mb-2"><%= f.date_field  :expires_on, class: "form-control", placeholder: "Vencimiento", title: "Fecha de vencimiento del lote" %></div>
+          <div class="col-md-3 mb-2"><%= f.number_field :unit_cost, step: "0.01", min: 0, class: "form-control", placeholder: "Costo por unidad", title: "Costo por unidad del lote" %></div>
+          <div class="col-md-2 mb-2"><%= f.number_field :quantity_on_hand, min: 0, class: "form-control", placeholder: "Cantidad" %></div>
+          <div class="col-md-1 mb-2 d-grid"><%= f.submit "Agregar", class: "btn btn-primary" %></div>
+        </div>
+      <% end %>  
+    </div>
+  </div>
+</div>

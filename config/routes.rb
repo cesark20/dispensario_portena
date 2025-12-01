@@ -1,34 +1,27 @@
 Rails.application.routes.draw do
- 
-  get "profiles/edit"
-  get "profiles/update"
-  get "internal_users/index"
-  get "internal_users/edit"
-  get "internal_users/update"
+  # get "withdrawals/index"
+  # get "withdrawals/new"
+  # get "withdrawals/create"
+  # get "withdrawals/show"
+  # get "item_batches/create"
+  # get "item_batches/destroy"
+  # resources :items
 
-  resources :clients, only: [:index, :new, :create, :edit, :update]
-  resources :internal_users
-  resource :profile, only: [:edit, :update]
-  
-  resources :stocks do
-    member do
-      delete 'delete_image/:image_id', to: 'stocks#delete_image', as: 'delete_image'
-    end
-  end
-
-  resources :services
-  resources :budgets do
+  resources :items do
+    resources :item_batches, only: [:create, :destroy]
     collection do
-      get 'search_items' # Ruta para buscar productos y servicios
-    end
-
-    member do
-      post 'send_email' # Ruta para enviar el presupuesto por mail
+      get :reorder        # pantalla con lista para seleccionar
+      post :reorder_summary  # procesa cantidades y muestra vista previa
+      post :reorder_pdf   # genera el PDF final
     end
   end
-  resources :expenses
-  
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+
+  resources :deliveries, only: [:index, :show]
+  resources :patient_deliveries, only: [:index, :show]
+
+  resources :withdrawals, only: [:index, :new, :create, :show]
+
+  devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -42,17 +35,18 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
+  # root to: "home#index"
   get "dashboard", to: "dashboard#index"
-  root "public#home"
+  root "dashboard#index"
 
-  get "products", to: "public#products"
-  get "carddetail", to: "public#services"
+  resources :providers
 
-  
-  get "contact", to: "public#contact"
-  post 'send_contact', to: 'public#send_contact'
 
-  get 'products/:id', to: 'public#product', as: :public_product
+  resource :profile, only: [:edit, :update]
 
-  get "exchange_rate/dolar", to: "exchange_rates#dolar"
+  authenticate :user do
+    resources :patients
+  end
+
+  resources :internal_users
 end

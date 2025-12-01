@@ -5,10 +5,12 @@
         <div class="nav">
           <div class="sb-sidenav-menu-heading">Core</div>
           <%= link_to "Dashboard", dashboard_path, class: "nav-link" %>
-          <%= link_to "Expensas", expenses_path, class: "nav-link" %>
-          <%= link_to "Presupuestos", budgets_path, class: "nav-link" %>
-          <%= link_to "Clientes", clients_path, class: "nav-link" %>
-          <%= link_to "Usuarios Internos", internal_users_path, class: "nav-link" %>
+          <%= link_to "Egresos", withdrawals_path, class: "nav-link" %>
+
+          <!-- <%= link_to "Expensas", dashboard_path, class: "nav-link" %>-->
+          <!-- <%= link_to "Presupuestos", dashboard_path, class: "nav-link" %>-->
+          <!-- <%= link_to "Clientes", dashboard_path, class: "nav-link" %>-->
+          <!-- <%= link_to "Usuarios Internos", dashboard_path, class: "nav-link" %>-->
           <!-- <div class="sb-sidenav-menu-heading">Interface</div>
           <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts">
             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -23,13 +25,16 @@
           </div> -->
 
           <div class="sb-sidenav-menu-heading">Cargas</div>
-          <%= link_to "Stock", stocks_path, class: "nav-link" %>
-          <%= link_to "Servicios", services_path, class: "nav-link" %>
+          <%= link_to "Insumos", items_path, class: "nav-link" %>
+          <%= link_to "Proovedores", providers_path, class: "nav-link" %>
+          <%= link_to "Pacientes", patients_path, class: "nav-link" %>
+          <%= link_to "Usuarios Internos", internal_users_path, class: "nav-link" %>
+          <!-- <%= link_to "Servicios", dashboard_path, class: "nav-link" %>-->
         </div>
       </div>
       <div class="sb-sidenav-footer">
         <div class="small">Conectado como:</div>
-        <%= user_signed_in? ? current_user.name : "Guest" %>
+        <%= user_signed_in? ? current_user.first_name : "Guest" %>
       </div>
     </nav>
   </div>

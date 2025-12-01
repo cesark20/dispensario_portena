@@ -1,0 +1,45 @@
+
+
+
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Medicamentos entregados</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Listado de medicamentos con entregas</h6>
+    </div>
+
+    <div class="card-body">
+      <% if @items.empty? %>
+        <div class="alert alert-info">Todavía no hay entregas registradas.</div>
+      <% else %>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped" id="generalTable">
+            <thead class="table-dark">
+              <tr>
+                <th>Medicamento</th>
+                <th>Cantidad total entregada</th>
+                <th></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @items.each do |item| %>
+                <% total_qty = WithdrawalLine.where(item_id: item.id).sum(:quantity) %>
+
+                <tr>
+                  <td><%= item.name %></td>
+                  <td><%= total_qty %></td>
+                  <td>
+                    <%= link_to '<i class="fa-solid fa-eye"></i>'.html_safe, delivery_path(item),
+                        class: "btn btn-sm btn-info" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

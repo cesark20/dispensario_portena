@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  withdrawal_line: one
+  item_batch: one
+  quantity: 1
+  unit_value: 9.99
+
+two:
+  withdrawal_line: two
+  item_batch: two
+  quantity: 1
+  unit_value: 9.99

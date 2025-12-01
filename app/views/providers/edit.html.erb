@@ -1,0 +1,12 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Proovedores</h1>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Editar Proovedor</h6>
+      <%= link_to "Volver", providers_path, class: 'btn btn-primary btn-icon-split btn-sm' %>
+    </div>
+    <div class="card-body">
+        <%= render "form", provider: @provider %>
+    </div>
+  </div>
+</div>

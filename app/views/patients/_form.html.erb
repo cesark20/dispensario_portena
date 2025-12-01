@@ -1,0 +1,98 @@
+<%= form_with model: @patient,
+              url: (@patient.new_record? ? patients_path : patient_path(@patient)),
+              local: true do |f| %>
+
+  <% if @patient.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% @patient.errors.full_messages.each { |m| %><li><%= m %></li><% } %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="row">
+      <div class="col-md-6">
+        <%= f.label :first_name, "Nombre" %>
+        <%= f.text_field :first_name, class: "form-control" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :last_name, "Apellido" %>
+        <%= f.text_field :last_name, class: "form-control" %>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-6">
+        <%= f.label :document_id, "DNI" %>
+          <%= f.text_field :document_id, class: "form-control" %>
+       </div>
+
+  <div class="col-md-6">
+    <%= f.label :phone, "Teléfono" %>
+      <%= f.text_field :phone, class: "form-control" %>
+  </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-6">
+    <%= f.label :email %>
+      <%= f.email_field :email, class: "form-control" %>
+      </div>
+
+  <div class="col-md-6">
+    <%= f.label :address, "Dirección" %>
+    <%= f.text_field :address, class: "form-control" %>
+  </div>
+</div>
+
+    <div class="row">
+      <div class="col-md-6">
+      
+      </div>
+      <div class="col-md-6">
+      
+      </div>
+    </div>
+
+
+  <%= f.fields_for :patient_info do |pi| %>
+    <div class="row">
+      <div class="col-md-6">
+        <%= pi.label :health_insurance, "Obra social" %>
+        <%= pi.text_field :health_insurance, class: "form-control" %>
+      </div>
+      <div class="col-md-6">
+        <%= pi.label :policy_number, "N° Afiliado" %>
+        <%= pi.text_field :policy_number, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row mt-2">
+      <div class="col-md-6">
+        <%= pi.label :birthdate, "Fecha de nacimiento" %>
+        <%= pi.date_field :birthdate, class: "form-control" %>
+      </div>
+
+      <div class="col-md-6">
+        <%= f.label :reimbursement, "Reintegro" %>
+        <%= f.select :reimbursement,
+            [["100% (no paga)","full"],["50%","half"],["0% (paga todo)","none"]],
+            {}, class: "form-control" %>
+      </div>
+    </div>
+
+ 
+     <br>
+    
+
+    <div class="mb-3">  
+      <%= pi.label :notes, "Notas" %>
+      <%= pi.text_area :notes, class: "form-control", rows: 3 %>
+    </div>
+  <% end %>
+
+
+  <div class="d-flex justify-content-end">
+    <%= f.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

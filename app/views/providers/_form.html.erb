@@ -1,0 +1,58 @@
+<%= form_with(model: provider, local: true) do |f| %>
+
+<% if @provider.errors.any? %>
+  <div id="error_explanation" class="alert alert-danger">
+    <p><strong><%= pluralize(@provider.errors.count, "error") %></strong> impidieron guardar:</p>
+    <ul>
+      <% @provider.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+
+  <div class="mb-3">
+    <%= f.label :name, "Nombre" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :contact_name, "Nombre de Contacto" %>
+    <%= f.text_field :contact_name, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :phone, "Telefono" %>
+    <%= f.telephone_field :phone, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :email, "Email" %>
+    <%= f.email_field :email, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :address, "Direccion" %>
+    <%= f.text_field :address, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :cuit, "CUIT" %>
+    <%= f.text_field :cuit, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :status, "Activo" %>
+    <%= f.check_box :status %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :comments, "Comentario" %>
+    <%= f.text_area :comments, class: "form-control", rows: 3 %>
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <%= f.submit "Guardar", class: "btn btn-primary" %>
+  </div>
+<% end %>

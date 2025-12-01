@@ -11,7 +11,7 @@
                 <thead class="table-dark">
                 <tr>
                   <th>Nombre</th>
-                  <th>Email</th>
+                  <th>Apellido</th>
                   <th>Roles</th>
                   <th>Acciones</th>
                 </tr>
@@ -19,9 +19,9 @@
                 <tbody>
                   <% @internal_users.each do |internal_user| %>
                     <tr>
-                      <td><%= internal_user.name %></td>
-                      <td><%= internal_user.email %></td>
-                      <td><%= internal_user.role.capitalize %></td>
+                      <td><%= internal_user.first_name %></td>
+                      <td><%= internal_user.last_name %></td>
+                      <td><%= internal_user.role_label%></td>
                       <td>
                         <%= link_to '<i class="fa-solid fa-pen-to-square"></i>'.html_safe, edit_internal_user_path(internal_user), class: "btn btn-warning btn-sm" %>
                         <%= link_to '<i class="fa-solid fa-trash"></i>'.html_safe, internal_user_path(internal_user), method: :delete, data: { confirm: "¿Estás seguro que querés eliminar este usuario?" }, class: "btn btn-sm btn-danger" %>

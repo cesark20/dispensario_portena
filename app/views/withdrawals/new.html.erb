@@ -1,0 +1,121 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Nuevo Egreso</h1>
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <%= form_with model: @withdrawal, local: true do |f| %>
+
+        <% if @withdrawal.errors.any? %>
+          <div class="alert alert-danger">
+            <ul><% @withdrawal.errors.full_messages.each { |m| %><li><%= m %></li><% } %></ul>
+          </div>
+        <% end %>
+
+        <div class="row mb-3">
+          <div class="col-md-3">
+            <%= f.label :kind, "Tipo" %>
+            <%= f.select :kind, [["Paciente","patient"],["Enfermería","nursing"]],
+                        {}, class: "form-control", id: "withdrawal_kind" %>
+          </div>
+
+          <div class="col-md-3">
+            <%= f.label :reimbursement, "Reintegro" %>
+            <%= f.select :reimbursement,
+              [["100% (no paga)", "full"], ["50%", "half"], ["0% (paga todo)", "none"]],
+              {}, class: "form-control", id: "withdrawal_reimbursement" %>
+          </div>
+
+          <!-- 💥 ACA reemplazás tus viejos campos de paciente y enfermería -->
+          <div class="col-md-3">
+            <%= f.label :patient_id, "Paciente" %>
+            <select name="withdrawal[patient_id]" id="withdrawal_patient_id" class="form-control"
+                    data-map='<%= @patients.map { |u| [u.id, u.reimbursement] }.to_h.to_json %>'>
+              <option value="">-</option>
+              <% @patients.each do |u| %>
+                <option value="<%= u.id %>"><%= [u.last_name, u.first_name].compact.join(", ") %></option>
+              <% end %>
+            </select>
+          </div>
+
+          <div class="col-md-3">
+            <%= f.label :internal_user_id, "Enfermería (usuario)" %>
+            <select name="withdrawal[internal_user_id]" id="withdrawal_internal_user_id" class="form-control"
+                    data-map='<%= @nursing_users.map { |u| [u.id, u.reimbursement] }.to_h.to_json %>'>
+              <option value="">-</option>
+              <% @nursing_users.each do |u| %>
+                <option value="<%= u.id %>"><%= [u.last_name, u.first_name].compact.join(", ") %></option>
+              <% end %>
+            </select>
+          </div>
+        </div>
+
+        <hr>
+
+        <h6>Ítems</h6>
+        <div id="lines">
+          <%= f.fields_for :withdrawal_lines do |lf| %>
+            <div class="row g-2 align-items-end mb-2">
+              <div class="col-md-6">
+                <%= lf.label :item_id, "Insumo" %>
+                <%= lf.collection_select :item_id, Item.order(:name), :id, :name, {}, class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <%= lf.label :quantity, "Cantidad" %>
+                <%= lf.number_field :quantity, min: 1, class: "form-control" %>
+              </div>
+              <div class="col-md-3">
+                <label>Precio venta</label>
+                <input class="form-control" value="<%= lf.object.item&.sale_price || '' %>" disabled>
+              </div>
+
+              <%# campo real (oculto) por si querés forzarlo; puede omitirse gracias al before_validation %>
+              <%= lf.hidden_field :sale_unit_price %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="d-flex justify-content-end mt-3">
+          <%= f.submit "Guardar", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+
+<%# Al final del form / vista %>
+<script>
+(function() {
+  const kindSel  = document.getElementById("withdrawal_kind");
+  const patSel   = document.getElementById("withdrawal_patient_id");
+  const nurseSel = document.getElementById("withdrawal_internal_user_id");
+  const reinSel  = document.getElementById("withdrawal_reimbursement");
+
+  function setFromMap(selectEl) {
+    if (!selectEl) return;
+    const map = JSON.parse(selectEl.dataset.map || "{}");
+    const val = selectEl.value;
+    if (val && map[val]) reinSel.value = map[val];
+  }
+
+  function onKindChange() {
+    if (kindSel.value === "nursing") {
+      reinSel.value = "full";
+      reinSel.setAttribute("disabled", "disabled");
+      patSel.value = "";
+      patSel.setAttribute("disabled", "disabled");
+      nurseSel.removeAttribute("disabled");
+    } else {
+      reinSel.removeAttribute("disabled");
+      patSel.removeAttribute("disabled");
+      setFromMap(patSel);
+    }
+  }
+
+  kindSel && kindSel.addEventListener("change", onKindChange);
+  patSel  && patSel.addEventListener("change", () => setFromMap(patSel));
+  nurseSel&& nurseSel.addEventListener("change", () => setFromMap(nurseSel));
+  onKindChange();
+})();
+</script>

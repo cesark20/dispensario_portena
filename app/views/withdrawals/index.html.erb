@@ -1,0 +1,55 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Egresos de Insumos</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Listado de Egresos</h6>
+      <%= link_to "Nuevo Egreso", new_withdrawal_path, class: "btn btn-primary btn-sm" %>
+    </div>
+
+    <div class="card-body">
+      <% if @withdrawals.any? %>
+        <div class="table-responsive">
+          <table id="generalTable" class="table table-striped table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>Fecha</th>
+                <th>Tipo</th>
+                <th>Reintegro</th>
+                <th>Paciente / Usuario</th>
+                <th>Total</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @withdrawals.each do |w| %>
+                <tr>
+                  <td><%= w.id %></td>
+                  <td><%= l(w.occurred_at, format: :short) %></td>
+                  <td><%= w.kind == "patient" ? "Paciente" : "Enfermería" %></td>
+                  <td><%= w.reimbursement %></td>
+                  <td>
+                    <% if w.kind == "patient" %>
+                      <%= w.patient&.full_name || "-" %>
+                    <% else %>
+                      <%= w.internal_user&.full_name || "-" %>
+                    <% end %>
+                  </td>
+                  <td><%= number_to_currency(w.total_amount) %></td>
+                  <td>
+                    <%= link_to '<i class="fa-solid fa-eye"></i>'.html_safe,
+                        withdrawal_path(w),
+                        class: "btn btn-sm btn-info" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p>No hay egresos registrados.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -8,8 +8,24 @@
     <div class="card-body">
         <%= form_with(model: @user, url: profile_path, local: true) do |f| %>
           <div class="mb-3">
-            <%= f.label :name, "Nombre" %>
-            <%= f.text_field :name, class: "form-control" , readonly: true %>
+            <%= f.label :first_name, "Nombre" %>
+            <%= f.text_field :first_name, class: "form-control"  %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :last_name, "Apellido" %>
+            <%= f.text_field :last_name, class: "form-control"  %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :phone, "Telefono" %>
+            <%= f.text_field :phone, class: "form-control"  %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :address, "Direccion" %>
+            <%= f.text_field :address, class: "form-control"  %>
+          </div>
+          <div class="mb-3">
+            <%= f.label :document_id, "DNI" %>
+            <%= f.text_field :document_id, class: "form-control"  %>
           </div>
 
           <div class="mb-3">

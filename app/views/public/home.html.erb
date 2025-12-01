@@ -1,66 +1,9 @@
     <section>
       <div class="hero-image-wrapper">
-        <%= image_tag "banner-1.jpeg", class: "img-fluid w-100", alt: "Imagen Over Road" %>
+        <%= image_tag "banner-1.jpeg", class: "img-fluid w-100", alt: "Imagen Dispensario Porteña" %>
       </div>
     </section>
 
-
-    <section class="pb-5">
-      <div class="container-lg">
-
-        <div class="row">
-          <div class="col-md-12">
-
-            <div class="section-header d-flex flex-wrap justify-content-between my-4">
-              
-              <h2 class="section-title">Productos Destacados</h2>
-
-              <div class="d-flex align-items-center">
-                <%= link_to "Ver todos...", products_path, class: "btn btn-dark rounded-1" %>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-md-12">
-            <div class="product-grid row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">              
-              <% @products.each do |product| %>
-                <div class="col d-flex">
-                  <div class="card shadow-sm h-100 w-100 d-flex flex-column">
-                    <% if product.images.attached? %>
-                      <%= image_tag product.images.first.variant(resize_to_limit: [400, 300]), class: "card-img-top", style: "object-fit: cover; height: 200px;" %>
-                    <% else %>
-                      <%= image_tag "default_img.jpg", class: "card-img-top", style: "object-fit: contain; height: 200px;" %>
-                    <% end %>
-
-                    <div class="card-body d-flex flex-column justify-content-between">
-                      <div>
-                        <p class="text-uppercase text-muted mb-1 fw-semibold"><%= product.provider %></p>
-                        <h5 class="fw-bold mb-1"><%= product.name %></h5>
-                        <p class="text-muted small mb-2"><%= truncate(product.description, length: 60) %></p>
-
-                        <span class="badge bg-warning text-dark mb-2">10.5% OFF EFECTIVO</span>
-
-                        <h5 class="fw-bold">$<%= number_with_precision(product.price, precision: 2) %></h5>
-                        <!-- <p class="text-muted small">
-                          en 6 cuotas SIN INTERÉS de $<%= number_with_precision(product.price / 6.0, precision: 0) %>
-                        </p> -->
-                      </div>
-
-                      <div class="mt-auto pt-2">
-                        <%= link_to "VER PRODUCTO", public_product_path(product), class: "btn btn-dark w-100" %>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     
 
@@ -68,91 +11,12 @@
 
     
 
-    <section id="mision" class="pb-4">
-      <div class="container-lg">
-        <div class="row">
-          <div class="col-md-12">
-            <article class="post-item card border-0 shadow-sm p-3">
-              
-              <div class="card-body">
-                
-                <div class="post-header">
-                  <h3 class="post-title">
-                    Mision:
-                  </h3>
-                  <p>
-                    Equipar y proteger los vehículos de nuestros clientes, combinando tecnología, resistencia y diseño.
-                    Nos especializamos en accesorios 4x4 de alta calidad y servicios de car detailing premium, asegurando que cada vehículo esté listo para enfrentar cualquier camino sin perder su estilo.
-                    Buscamos ofrecer soluciones innovadoras que potencien la aventura y el cuidado automotriz.
-                  </p>
-                </div>
-              </div>
-            </article>
-          </div>
-          
-        </div>
-      </div>
-    </section>
+    
 
     
 
-    <section class="py-4">
-      <div class="container-lg">
-        <h2 class="my-4">Accesorios 4x4 y productos de car detailing más buscados</h2>
-        <a href="#" class="btn btn-warning me-2 mb-2">Barras y jaulas antivuelco</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Bumpers y paragolpes reforzados</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Shampoo siliconado</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Estribos laterales y rock sliders</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Paños de microfibra multiuso</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Eslingas de rescate y planchas de desatasco:</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Pulidor de vidrio</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Barras LED</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Sellador cerámico</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Racks de techo y soportes para carpas</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Manoplas de microfibra para lavado</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Compresores de aire portátiles</a>
-        <a href="#" class="btn btn-warning me-2 mb-2">Accesorios para caja</a>
-      </div>
-    </section>
+    
 
-    <section class="py-5">
-      <div class="container-lg">
-        <div class="row row-cols-1 row-cols-sm-3 row-cols-lg-3">
-          <div class="col">
-            <div class="card mb-3 border border-dark-subtle p-3">
-              <div class="text-dark mb-3">
-                <i class="fas fa-sparkles fa-3x text-dark"></i>
-              </div>
-              <div class="card-body p-0">
-                <h5>Card detailing</h5>
-                <p class="card-text">¡Hacemos que tu vehículo luzca mejor que nuevo! Ofrecemos servicios de car detailing diseñados para quienes buscan  detalle.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card mb-3 border border-dark-subtle p-3">
-              <div class="text-dark mb-3">
-                <i class="fas fa-car fa-3x text-dark"></i>
-              </div>
-              <div class="card-body p-0">
-                <h5>La Pasion por los autos</h5>
-                <p class="card-text">Esto no es un taller, ni un lavadero más. Es un espacio para los que entienden que una camioneta bien cuidada, habla por vos.</p>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card mb-3 border border-dark-subtle p-3">
-              <div class="text-dark mb-3">
-                <i class="fas fa-flag-checkered  fa-3x text-dark"></i>
-              </div>
-              <div class="card-body p-0">
-                <h5>Estoy recien arranca</h5>
-                <p class="card-text">Amamos los autos. Pero más que eso, amamos lo que representan: potencia, libertad, estilo. Por eso, cuando hacés detailing lo hacemos con precisión.</p>
-              </div>
-            </div>
-          </div>
-          
-          
-        </div>
-      </div>
-    </section>
+    
+
+    

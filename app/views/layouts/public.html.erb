@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for(:title) || "Overroad" %></title>
+    <title><%= content_for(:title) || "Dispenario Porteña" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -29,7 +29,7 @@
   </head>
 
   <body>
-   
+    <div id="toast-container" style="position: fixed; top: 1rem; right: 1rem; z-index: 2000;"></div>
     <%= render "layouts/public/navbar" %>
     <%= render 'layouts/public/flash' %>
     

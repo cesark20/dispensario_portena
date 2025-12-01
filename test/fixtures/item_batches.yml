@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item: one
+  lot_code: MyString
+  expires_on: 2025-11-10
+  unit_cost: 9.99
+  quantity_on_hand: 1
+
+two:
+  item: two
+  lot_code: MyString
+  expires_on: 2025-11-10
+  unit_cost: 9.99
+  quantity_on_hand: 1

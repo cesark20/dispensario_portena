@@ -1,0 +1,42 @@
+
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Medicamentos entregados</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Entregas de: <span class="fw-bold"><%= @item.name %></span></h6>
+      <%= link_to "Volver", deliveries_path, class: 'btn btn-primary btn-icon-split btn-sm' %>
+    </div>
+
+    <div class="card-body">
+      <% if @lines.empty? %>
+        <div class="alert alert-info">Este medicamento no tiene entregas registradas.</div>
+      <% else %>
+        <div class="table-responsive">
+          <table class="table table-sm table-striped table-bordered" id="generalTable">
+            <thead class="table-dark">
+              <tr>
+                <th>Fecha</th>
+                <th>Paciente / Personal</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @lines.each do |line| %>
+                <% w = line.withdrawal %>
+
+                <% person = w.patient&.full_name || w.internal_user&.full_name || "-" %>
+
+                <tr>
+                  <td><%= l(w.occurred_at.to_date) %></td>
+                  <td><%= person %></td>
+                  <td><%= line.quantity %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

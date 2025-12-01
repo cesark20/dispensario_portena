@@ -1,0 +1,44 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Pacientes - <%= @patient.full_name %></h1>
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Listado de Medicamentos entregados</h6>
+      <%= link_to "Nuevo Paciente", patient_deliveries_path, class: 'btn btn-primary btn-icon-split btn-sm' %>
+    </div>
+
+
+    <div class="card-body">
+      <% if @lines.empty? %>
+        <div class="alert alert-info">
+          Este paciente no tiene entregas registradas.
+        </div>
+      <% else %>
+        <div class="table-responsive">
+          <table class="table table-sm table-striped table-bordered" id="generalTable">
+            <thead class="table-dark">
+              <tr>
+                <th>Fecha</th>
+                <th>Medicamento</th>
+                <th>Cantidad</th>
+                <th>Entregado por</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @lines.each do |line| %>
+                <% w = line.withdrawal %>
+                <% delivered_by = w.internal_user&.full_name || "-" %>
+
+                <tr>
+                  <td><%= w.occurred_at.to_date.strftime("%d-%m-%Y") %></td>
+                  <td><%= line.item.name %></td>
+                  <td><%= line.quantity %></td>
+                  <td><%= delivered_by %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
