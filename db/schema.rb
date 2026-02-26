@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_11_185356) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_23_040055) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -63,6 +63,34 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_11_185356) do
     t.bigint "updated_by_id"
     t.index ["created_by_id"], name: "index_providers_on_created_by_id"
     t.index ["updated_by_id"], name: "index_providers_on_updated_by_id"
+  end
+
+  create_table "shift_handover_medications", force: :cascade do |t|
+    t.bigint "shift_handover_id", null: false
+    t.string "medication_name"
+    t.string "dose"
+    t.integer "quantity_reported"
+    t.integer "quantity_received"
+    t.string "status"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["shift_handover_id"], name: "index_shift_handover_medications_on_shift_handover_id"
+  end
+
+  create_table "shift_handovers", force: :cascade do |t|
+    t.bigint "from_nurse_id", null: false
+    t.bigint "to_nurse_id", null: false
+    t.decimal "cash_received"
+    t.decimal "cash_generated"
+    t.decimal "cash_delivered"
+    t.text "observations"
+    t.string "status"
+    t.datetime "validated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_nurse_id"], name: "index_shift_handovers_on_from_nurse_id"
+    t.index ["to_nurse_id"], name: "index_shift_handovers_on_to_nurse_id"
   end
 
   create_table "stock_movements", force: :cascade do |t|
@@ -127,6 +155,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_11_185356) do
   add_foreign_key "patient_infos", "users"
   add_foreign_key "providers", "users", column: "created_by_id"
   add_foreign_key "providers", "users", column: "updated_by_id"
+  add_foreign_key "shift_handover_medications", "shift_handovers"
+  add_foreign_key "shift_handovers", "users", column: "from_nurse_id"
+  add_foreign_key "shift_handovers", "users", column: "to_nurse_id"
   add_foreign_key "stock_movements", "item_batches"
   add_foreign_key "stock_movements", "withdrawal_lines"
   add_foreign_key "withdrawal_lines", "items"

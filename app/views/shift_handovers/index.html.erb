@@ -1,0 +1,45 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Entregas de turno</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+      <h6 class="m-0 font-weight-bold text-primary">Listado de entregas</h6>
+      <%= link_to "Nueva Entrega de Turno", new_shift_handover_path, class: "btn btn-primary btn-sm" %>
+    </div>
+
+    <div class="card-body">
+      <% if @shift_handovers.any? %>
+        <div class="table-responsive">
+          <table id="generalTable" class="table table-striped table-bordered">
+            <thead class="table-dark">
+              <tr>
+                <th>ID</th>
+                <th>De</th>
+                <th>A</th>
+                <th>Estado</th>
+                <th>Creado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @shift_handovers.each do |h| %>
+                <tr>
+                  <td><%= h.id %></td>
+                  <td><%= h.from_nurse&.first_name || h.from_nurse&.email %></td>
+                  <td><%= h.to_nurse&.first_name || h.to_nurse&.email %></td>
+                  <td><%= h.status_es %></td>
+                  <td><%= l(h.created_at, format: :short) rescue h.created_at %></td>
+                  <td><%= link_to '<i class="fa-solid fa-eye"></i>'.html_safe, shift_handover_path(h) %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p>No hay egresos registrados.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+

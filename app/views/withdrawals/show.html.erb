@@ -8,7 +8,7 @@
       <p><strong>Paciente:</strong> <%= @withdrawal.patient&.full_name || "-" %></p>
       <p><strong>Enfermería:</strong> <%= @withdrawal.internal_user&.full_name || "-" %></p>
       <p><strong>Fecha:</strong> <%= l(@withdrawal.occurred_at, format: :short) %></p>
-      <p><strong>Total a cobrar:</strong> <%= number_to_currency(@withdrawal.total_amount) %></p>
+      <p><strong>Total a cobrar:</strong> <%= number_to_currency(@withdrawal.total_amount, unit: "$") %></p>
 
       <hr>
       <h6>Detalle</h6>
@@ -21,8 +21,8 @@
             <tr>
               <td><%= l.item.name %></td>
               <td><%= l.quantity %></td>
-              <td><%= number_to_currency(l.sale_unit_price) %></td>
-              <td><%= number_to_currency(l.sale_unit_price*l.quantity) %></td>
+              <td><%= number_to_currency(l.sale_unit_price, unit: "$") %></td>
+              <td><%= number_to_currency(l.sale_unit_price*l.quantity, unit: "$") %></td>
             </tr>
           <% end %>
         </tbody>
@@ -39,7 +39,7 @@
                 <td><%= m.item_batch.lot_code %></td>
                 <td><%= m.item_batch.expires_on %></td>
                 <td><%= m.quantity %></td>
-                <td><%= number_to_currency(m.unit_value) %></td>
+                <td><%= number_to_currency(m.unit_value, unit: "$") %></td>
               </tr>
             <% end %>
           <% end %>

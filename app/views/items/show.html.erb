@@ -16,7 +16,7 @@
         <div class="col-md-3"><strong>SKU:</strong> <%= @item.sku %></div>
         <div class="col-md-3"><strong>Unidad:</strong> <%= @item.unit %></div>
         <div class="col-md-3"><strong>Stock total:</strong> <%= @item.total_on_hand %> <%= @item.low_stock? ? "(Bajo)" : "" %></div>
-        <div class="col-md-3"><strong>Precio venta:</strong> <%= number_to_currency(@item.sale_price) if @item.sale_price %></div>
+        <div class="col-md-3"><strong>Precio venta:</strong> <%= number_to_currency(@item.sale_price, unit: "$") if @item.sale_price %></div>
         <div class="col-md-3"><strong>Proveedor:</strong><%= @item.provider&.name || "-" %></div>
       </div>
 
@@ -39,7 +39,7 @@
               <tr class="<%= 'table-danger' if b.expires_on.present? && b.expires_on < Date.current %>">
                 <td><%= b.lot_code %></td>
                 <td><%= b.expires_on %></td>
-                <td><%= number_to_currency(b.unit_cost) if b.unit_cost %></td>
+                <td><%= number_to_currency(b.unit_cost, unit: "$") if b.unit_cost %></td>
                 <td><%= b.quantity_on_hand %></td>
                 <td>
                   <%= button_to '<i class="fa-solid fa-trash"></i>'.html_safe,

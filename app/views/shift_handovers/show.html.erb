@@ -1,0 +1,71 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Entrega de turno</h1>
+
+  <div class="card shadow mb-4">
+    <div class="card-body">
+
+
+
+      <p><b>De:</b> <%= @shift_handover.from_nurse&.full_name || @shift_handover.from_nurse&.email %></p>
+      <p><b>A:</b> <%= @shift_handover.to_nurse&.full_name || @shift_handover.to_nurse&.email %></p>
+      <p><b>Estado:</b> <%= @shift_handover.status_es %></p>
+
+      <p><b>Dinero recibido:</b> <%= @shift_handover.cash_received %></p>
+      <p><b>Dinero realizado:</b> <%= @shift_handover.cash_generated %></p>
+      <p><b>Dinero entregado:</b> <%= @shift_handover.cash_delivered %></p>
+
+      <p><b>Observaciones:</b><br><%= @shift_handover.observations %></p>
+
+      <h3>Medicamentos</h3>
+      <ul>
+        <% @shift_handover.shift_handover_medications.each do |m| %>
+          <li>
+            <%= m.medication_name %> - <%= m.dose %> - Reportado: <%= m.quantity_reported %>
+            <% if m.quantity_received.present? %>
+              | Recibido: <%= m.quantity_received %> (<%= m.status_es %>)
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+
+      <% if @shift_handover.to_nurse_id == current_user.id && @shift_handover.status == "pending_validation" %>
+        <h2>Validar entrega</h2>
+
+        <%= form_with model: @shift_handover, url: validate_handover_shift_handover_path(@shift_handover), method: :patch do |f| %>
+          <% @shift_handover.shift_handover_medications.each do |med| %>
+            <div style="border:1px solid #ddd; padding:8px; margin-bottom:8px;">
+              <p>
+                <b><%= med.medication_name %></b>
+                (Dosis: <%= med.dose %>) - Reportado: <%= med.quantity_reported %>
+              </p>
+
+              <%= hidden_field_tag "shift_handover[shift_handover_medications_attributes][][id]", med.id %>
+              <div class="row">
+                <div class="col-md-6">
+                  <%= label_tag nil, "Recibido" %>
+                  <%= number_field_tag "shift_handover[shift_handover_medications_attributes][][quantity_received]", med.quantity_received, class: "form-control" %>
+                </div>  
+              
+                <div class="col-md-6">
+                  <%= label_tag nil, "Comentario (si hay diferencia)" %>
+                  <%= text_field_tag(
+                    "shift_handover[shift_handover_medications_attributes][][comment]",
+                    med.comment,
+                    class: "form-control",
+                    placeholder: "Aclarar diferencia",
+                    size: 40
+                  ) %>
+                </div>
+              
+              </div>
+            </div>
+          <% end %>
+
+          <div class="d-flex justify-content-end">
+            <%= f.submit "Validar entrega", class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>

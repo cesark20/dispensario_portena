@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  # get "shift_handovers/index"
+  # get "shift_handovers/new"
+  # get "shift_handovers/show"
   # get "withdrawals/index"
   # get "withdrawals/new"
   # get "withdrawals/create"
@@ -6,9 +9,17 @@ Rails.application.routes.draw do
   # get "item_batches/create"
   # get "item_batches/destroy"
   # resources :items
+  #
+  #
+  resources :shift_handovers, only: [ :index, :new, :create, :show ] do
+    member do
+      patch :validate_handover
+      patch :dispute
+    end
+  end
 
   resources :items do
-    resources :item_batches, only: [:create, :destroy]
+    resources :item_batches, only: [ :create, :destroy ]
     collection do
       get :reorder        # pantalla con lista para seleccionar
       post :reorder_summary  # procesa cantidades y muestra vista previa
@@ -16,10 +27,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :deliveries, only: [:index, :show]
-  resources :patient_deliveries, only: [:index, :show]
+  resources :deliveries, only: [ :index, :show ]
+  resources :patient_deliveries, only: [ :index, :show ]
 
-  resources :withdrawals, only: [:index, :new, :create, :show]
+  resources :withdrawals, only: [ :index, :new, :create, :show ]
 
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
@@ -42,7 +53,7 @@ Rails.application.routes.draw do
   resources :providers
 
 
-  resource :profile, only: [:edit, :update]
+  resource :profile, only: [ :edit, :update ]
 
   authenticate :user do
     resources :patients

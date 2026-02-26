@@ -1,0 +1,58 @@
+<div class="container-fluid px-4">
+  <h1 class="mt-4">Nueva Entrega de Turno</h1>
+  <div class="card shadow mb-4">
+    <div class="card-body">
+
+<%= form_with model: @shift_handover do |f| %>
+
+  <% if @shift_handover.errors.any? %>
+    <div class="alert alert-danger">
+      <ul><% @shift_handover.errors.full_messages.each { |m| %><li><%= m %></li><% } %></ul>
+    </div>
+  <% end %>
+
+
+  <div class="row mb-3">
+    <div class="col-md-3">
+      <%= f.label :to_nurse_id, "Entrego a" %>
+      <%= f.select :to_nurse_id,
+        options_from_collection_for_select(
+          @healthcare_staff,   # solo healthcare_staff
+          :id,                 # valor que se guarda
+          :email,              # lo que se muestra
+          @shift_handover.to_nurse_id
+        ),
+        { include_blank: "Seleccioná quién recibe" }, class: "form-control" %>
+  </div>
+
+  <div class="col-md-3"><%= f.label :cash_received, "Dinero recibido" %><%= f.number_field :cash_received, step: 0.01, class: "form-control" %></div>
+  <div class="col-md-3"><%= f.label :cash_generated, "Dinero realizado" %><%= f.number_field :cash_generated, step: 0.01, class: "form-control" %></div>
+  <div class="col-md-3"><%= f.label :cash_delivered, "Dinero entregado" %><%= f.number_field :cash_delivered, step: 0.01, class: "form-control" %></div>
+
+  <div class="col-md-12">
+    <%= f.label :observations, "Observaciones" %><br>
+    <%= f.text_area :observations, class: "form-control" %>
+  </div>
+  </div>
+
+          <hr>
+
+
+  <h6><strong>Medicamentos entregados</strong></h6>
+<div id="lines">
+  <%= f.fields_for :shift_handover_medications do |m| %>
+    <div class="row g-2 align-items-end mb-2">
+      <div class="col-md-6"><%= m.label :medication_name, "Medicamento" %><%= m.text_field :medication_name , class: "form-control"%></div>
+      <div class="col-md-3"><%= m.label :dose, "Dosis" %><%= m.text_field :dose , class: "form-control"%></div>
+      <div class="col-md-3"><%= m.label :quantity_reported, "Cantidad" %><%= m.number_field :quantity_reported , class: "form-control"%></div>
+    </div>
+  <% end %>
+</div>
+<div class="d-flex justify-content-end mt-3">
+  <%= f.submit "Crear entrega", class: "btn btn-primary" %>
+</div>
+<% end %>
+
+ </div> 
+ </div> 
+ </div>

@@ -29,7 +29,7 @@
                 <td><%= item.unit %></td>
                 <td><strong><%= item.total_on_hand %></strong></td>
                 <td><%= item.min_stock %></td>
-                <td><%= number_to_currency(item.sale_price) if item.sale_price %></td>
+                <td><%= number_to_currency(item.sale_price, unit: "$") if item.sale_price %></td>
                 <td>
                   <%= link_to '<i class="fa-solid fa-pen-to-square"></i>'.html_safe, edit_item_path(item), class: "btn btn-warning btn-sm" %>
                   <%= link_to '<i class="fa-solid fa-trash"></i>'.html_safe, item_path(item),
