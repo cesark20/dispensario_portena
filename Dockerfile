@@ -25,9 +25,20 @@ ENV RAILS_ENV="production" \
 # Throw-away build stage to reduce size of final image
 FROM base AS build
 
-# Install packages needed to build gems
+# Install packages needed to build gems + Node/Yarn
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config && \
+    apt-get install --no-install-recommends -y \
+      build-essential \
+      git \
+      libpq-dev \
+      pkg-config \
+      ca-certificates \
+      gnupg \
+      curl && \
+    curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get update -qq && \
+    apt-get install --no-install-recommends -y nodejs && \
+    npm install -g yarn && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
