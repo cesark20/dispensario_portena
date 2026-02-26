@@ -131,6 +131,8 @@ GEM
     devise-i18n (1.15.0)
       devise (>= 4.9.0)
       rails-i18n
+    dockerfile-rails (1.7.10)
+      rails (>= 3.0.0)
     dotenv (3.1.8)
     dotenv-rails (3.1.8)
       dotenv (= 3.1.8)
@@ -407,6 +409,7 @@ DEPENDENCIES
   debug
   devise
   devise-i18n
+  dockerfile-rails (>= 1.7)
   dotenv-rails
   humanize (~> 3.1.0)
   image_processing (~> 1.2)
@@ -430,4 +433,4 @@ DEPENDENCIES
   web-console
 
 BUNDLED WITH
-   2.6.4
+   2.4.19

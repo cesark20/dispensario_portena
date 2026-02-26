@@ -75,3 +75,4 @@ gem "image_processing", "~> 1.2"
 gem "aws-sdk-s3", require: false
 gem 'dotenv-rails'
 gem 'kaminari'
+gem "dockerfile-rails", ">= 1.7", :group => :development
